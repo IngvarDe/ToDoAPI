@@ -1,4 +1,4 @@
-﻿namespace ToDoAPI;
+﻿namespace ToDoApi;
 
 public partial class AppShell : Shell
 {

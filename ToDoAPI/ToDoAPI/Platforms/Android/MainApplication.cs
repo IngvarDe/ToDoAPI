@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace ToDoAPI;
+namespace ToDoApi;
 
 [Application]
 public class MainApplication : MauiApplication

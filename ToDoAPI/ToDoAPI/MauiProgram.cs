@@ -1,4 +1,4 @@
-﻿namespace ToDoAPI;
+﻿namespace ToDoApi;
 
 public static class MauiProgram
 {

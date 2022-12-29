@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace ToDoAPI;
+namespace ToDoApi;
 
 [Register("AppDelegate")]
 public class AppDelegate : MauiUIApplicationDelegate

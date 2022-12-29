@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace ToDoAPI;
+namespace ToDoApi;
 
 public class Program
 {
