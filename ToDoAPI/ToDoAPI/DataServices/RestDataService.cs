@@ -1,5 +1,7 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -41,9 +43,36 @@ namespace ToDoApi.DataServices
             throw new NotImplementedException();
         }
 
-        public Task<List<ToDo>> GetAllToDosAsync()
+        public async Task<List<ToDo>> GetAllToDosAsync()
         {
-            throw new NotImplementedException();
+            List<ToDo> todos = new List<ToDo>();
+
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                System.Diagnostics.Debug.WriteLine("Check the Internet Connectivity!");
+                return todos;
+            }
+
+            try
+            {
+                HttpResponseMessage response = await _httpClient.GetAsync($"{_url}/todo");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+
+                    todos = JsonSerializer.Deserialize<List<ToDo>>(content, _jsonSerializerOptions);
+                }
+                else 
+                {
+                    Debug.WriteLine("Non http request 2xx response");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Sorry, {ex.Message}");
+            }
+            return todos;
         }
 
         public Task UpdateTodoAsync(int id)
