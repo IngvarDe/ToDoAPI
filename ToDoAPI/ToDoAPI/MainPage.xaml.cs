@@ -1,4 +1,4 @@
-﻿using Android.OS;
+﻿//using Android.OS;
 using ToDoApi.DataServices;
 using System.Diagnostics;
 
@@ -20,7 +20,7 @@ public partial class MainPage : ContentPage
 	{
 		base.OnAppearing();
 
-		//collectionView.ItemsSource = await _dataService.GetAllToDosAsync();
+		collectionView.ItemsSource = await _dataService.GetAllToDosAsync();
 	}
 
 	async void OnAddToDoClicked(object sender, EventArgs e)
