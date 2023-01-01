@@ -33,14 +33,66 @@ namespace ToDoApi.DataServices
 
 
 
-        public Task AddTodoAsync(ToDo toDo)
+        public async Task AddTodoAsync(ToDo toDo)
         {
-            throw new NotImplementedException();
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("Check the Internet Connectivity!");
+                return;
+            }
+
+            try
+            {
+                string jsonToDo = JsonSerializer.Serialize<ToDo>(toDo, _jsonSerializerOptions);
+                StringContent content = new StringContent(jsonToDo, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/todo", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine("Successfully created ToDo!!!");
+                }
+                else
+                {
+                    Debug.WriteLine("Non http request 2xx response");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Sorry, {ex.Message}");
+            }
+
+            return;
         }
 
-        public Task DeleteTodoAsync(int id)
+        public async Task DeleteTodoAsync(int id)
         {
-            throw new NotImplementedException();
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("Check the Internet Connectivity!");
+                return;
+            }
+
+            try
+            {
+                HttpResponseMessage response = await _httpClient.DeleteAsync($"{_url}/todo/{id}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine("Successfully created ToDo!!!");
+                }
+                else
+                {
+                    Debug.WriteLine("Non http request 2xx response");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Sorry, {ex.Message}");
+            }
+
+            return;
         }
 
         public async Task<List<ToDo>> GetAllToDosAsync()
@@ -49,7 +101,7 @@ namespace ToDoApi.DataServices
 
             if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
             {
-                System.Diagnostics.Debug.WriteLine("Check the Internet Connectivity!");
+                Debug.WriteLine("Check the Internet Connectivity!");
                 return todos;
             }
 
@@ -63,7 +115,7 @@ namespace ToDoApi.DataServices
 
                     todos = JsonSerializer.Deserialize<List<ToDo>>(content, _jsonSerializerOptions);
                 }
-                else 
+                else
                 {
                     Debug.WriteLine("Non http request 2xx response");
                 }
@@ -75,9 +127,36 @@ namespace ToDoApi.DataServices
             return todos;
         }
 
-        public Task UpdateTodoAsync(int id)
+        public async Task UpdateToDoAsync(ToDo toDo)
         {
-            throw new NotImplementedException();
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("---> No internet access...");
+                return;
+            }
+
+            try
+            {
+                string jsonToDo = JsonSerializer.Serialize<ToDo>(toDo, _jsonSerializerOptions);
+                StringContent content = new StringContent(jsonToDo, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await _httpClient.PutAsync($"{_url}/todo/{toDo.Id}", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine("Successfully created ToDo");
+                }
+                else
+                {
+                    Debug.WriteLine("---> Non Http 2xx response");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Whoops exception: {ex.Message}");
+            }
+
+            return;
         }
     }
 }
