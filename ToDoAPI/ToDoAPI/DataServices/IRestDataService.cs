@@ -12,6 +12,6 @@ namespace ToDoApi.DataServices
         Task<List<ToDo>> GetAllToDosAsync();
         Task AddTodoAsync(ToDo toDo);
         Task DeleteTodoAsync(int id);
-        Task UpdateTodoAsync(int id);
+        Task UpdateToDoAsync(ToDo todo);
     }
 }
