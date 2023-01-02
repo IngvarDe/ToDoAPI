@@ -19,10 +19,11 @@ namespace ToDoApi.DataServices
 
         public RestDataService
             (
-
+                HttpClient httpClient
             )
         {
-            _httpClient = new HttpClient();
+            _httpClient = httpClient;
+            //_httpClient = new HttpClient();
             _baseAddress = DeviceInfo.Platform == DevicePlatform.Android ? "http://10.2.2:5209" : "https://localhost:7209";
             _url = $"{_baseAddress}/api";
             _jsonSerializerOptions = new JsonSerializerOptions
