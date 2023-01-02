@@ -5,7 +5,7 @@ using ToDoApi.Models;
 
 namespace ToDoApi.Pages;
 
-[QueryProperty(nameof(ToDoApi.Models.ToDo), "ToDo")]
+[QueryProperty(nameof(ToDo), "ToDo")]
 public partial class ManageToDoPage : ContentPage
 {
 	private readonly IRestDataService _dataService;
@@ -45,12 +45,12 @@ public partial class ManageToDoPage : ContentPage
 	{
 		if (_isNew)
 		{
-			Debug.WriteLine("--> Add new Item");
+            System.Diagnostics.Debug.WriteLine("--> Add new Item");
 			await _dataService.AddTodoAsync(ToDo);
 		}
 		else
 		{
-            Debug.WriteLine("--> Update an Item");
+            System.Diagnostics.Debug.WriteLine("--> Update an Item");
             await _dataService.AddTodoAsync(ToDo);
         }
 
@@ -63,7 +63,7 @@ public partial class ManageToDoPage : ContentPage
         await Shell.Current.GoToAsync("..");
     }
 
-	async void OnCancelButtonCliked(object sender, EventArgs e)
+	async void OnCancelButtonClicked(object sender, EventArgs e)
 	{
 		await Shell.Current.GoToAsync("..");
 	}
